@@ -13,7 +13,8 @@ import streamlit as st
 
 date = '2021-9-1'
 filename = '9/' + date
-pitch_type = 'Curveball'
+pitch_type = st.selectbox('Pitch type:', ('4-Seam Fastball', 'Slider', 'Curveball'))
+leader_index = st.selectbox('Select index:', (1,2,3,4,5))
 
 
 # In[20]:
@@ -28,7 +29,7 @@ st.write('The top 5 ' + pitch_type + 's from MLB games on ' + date)
 
 df = pd.read_csv(filename, index_col = 0)
 leaderboard = df.loc[(df.pitch_type == pitch_type) & (df.result == 'Swinging Strike')].sort_values(by = 'rpm', ascending = False).head()
-leader = leaderboard.iloc[0]
+leader = leaderboard.iloc[leader_index - 1]
 leaderboard_show = leaderboard[['pitcher', 'batter', 'inning', 'mph', 'rpm', 'vbreak', 'hbreak']]
 leaderboard_show.columns = ['Pitcher', 'Batter', 'Inning', 'Velo (mph)', 'RPM', 'VBreak', 'HBreak']
 st.dataframe(leaderboard_show)
