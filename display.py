@@ -67,7 +67,7 @@ sort = sort_dict[sort]
 
 # In[25]:
 
-
+show_n = 5
 is_ascending = False
 
 leaderboard = df.loc[(df.pitch_type == pitch_type)].sort_values(by = sort, ascending = is_ascending)
