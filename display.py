@@ -6,6 +6,7 @@
 
 import pandas as pd
 import streamlit as st
+import matplotlib.pyplot as plt
 import seaborn as sns
 
 
@@ -94,13 +95,13 @@ if len(leaderboard) > 0:
         st.write(f"{leader.pitcher}'s {pitch_type.lower()} to {leader.batter} in inning {str(leader.inning)}, {leader['count'][1]}-{leader['count'][4]} count.")
         st.components.v1.iframe(f"https://www.mlb.com/video/search?q={leader.pitcher.replace(' ', '+')}+            {leader.batter.replace(' ', '+')}+inning+{str(leader.inning)}+{str(leader['count'][1])}+ball+            {str(leader['count'][4])}+strike&qt=FREETEXT", height = 600)
         
-        
+        fig = plt.figure(figsize = (10,4))
         sns.set_theme('notebook')
         ax = sns.kdeplot(x = df['fifax'])
         ax.set_xlabel('FiFaX')
         ax.annotate(f"{leader.pitcher}'s {leader.pitch_type_raw}", xy = (leader[sort], 0), xytext = (leader[sort], 2), arrowprops = dict(color = 'red'))
         ax.set(title = f'Distribution of {sort_in} for {pitch_type_in}s on {date}')
-        st.pyplot(ax)
+        st.pyplot(fig)
         
     else:
         st.write('Index out of range!')
