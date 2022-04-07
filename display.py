@@ -73,19 +73,23 @@ is_ascending = False
 leaderboard = df.loc[(df.pitch_type == pitch_type)].sort_values(by = sort, ascending = is_ascending)
 if pitcher_search != '':
     leaderboard = leaderboard.loc[leaderboard['pitcher'].apply(lambda pitcher_name: pitcher_search in pitcher_name)]
-show_n = min(len(leaderboard), 5)
-leader = leaderboard.iloc[leader_index - 1]
-leaderboard_show = leaderboard[['pitcher', 'batter', 'mph', 'rpm', 'vbreak', 'hbreak', 'fifax']]
-leaderboard_show.columns = ['Pitcher', 'Batter', 'Velo (mph)', 'RPM', 'VBreak', 'HBreak', 'FiFaX']
-leaderboard_show.index = range(1, len(leaderboard_show) + 1)
-st.write(f'The top {str(show_n)} {pitch_type}s from MLB games on {date}, sorted by {sort}.')
-st.dataframe(leaderboard_show.head(show_n))
+if len(leaderboard) > 0:
+    show_n = min(len(leaderboard), 5)
+    leader = leaderboard.iloc[leader_index - 1]
+    leaderboard_show = leaderboard[['pitcher', 'batter', 'mph', 'rpm', 'vbreak', 'hbreak', 'fifax']]
+    leaderboard_show.columns = ['Pitcher', 'Batter', 'Velo (mph)', 'RPM', 'VBreak', 'HBreak', 'FiFaX']
+    leaderboard_show.index = range(1, len(leaderboard_show) + 1)
+    st.write(f'The top {str(show_n)} {pitch_type}s from MLB games on {date}, sorted by {sort}.')
+    st.dataframe(leaderboard_show.head(show_n))
+    st.write(f"{leader.pitcher}'s {pitch_type.lower()} to {leader.batter} in inning {str(leader.inning)}, {leader['count'][1]}-{leader['count'][4]} count.")
+    st.components.v1.iframe(f"https://www.mlb.com/video/search?q={leader.pitcher.replace(' ', '+')}+        {leader.batter.replace(' ', '+')}+inning+{str(leader.inning)}+{str(leader['count'][1])}+ball+        {str(leader['count'][4])}+strike&qt=FREETEXT", height = 600)
+else:
+    st.write('Player not found!')
 
 
 # In[22]:
 
 
-st.write(f"{leader.pitcher}'s {pitch_type.lower()} to {leader.batter} in inning {str(leader.inning)}, {leader['count'][1]}-{leader['count'][4]} count.")
 #st.write('[Watch on MLB Film Room](https://www.mlb.com/video/search?q=' + leader.pitcher.replace(' ', '+') + '+' + \
 #    leader.batter.replace(' ', '+') + '+inning+' + str(leader.inning) + '+' + str(leader['count'][1]) + '+ball+' + \
 #    str(leader['count'][4]) + '+strike&qt=FREETEXT)')
@@ -94,5 +98,5 @@ st.write(f"{leader.pitcher}'s {pitch_type.lower()} to {leader.batter} in inning 
 # In[ ]:
 
 
-st.components.v1.iframe(f"https://www.mlb.com/video/search?q={leader.pitcher.replace(' ', '+')}+    {leader.batter.replace(' ', '+')}+inning+{str(leader.inning)}+{str(leader['count'][1])}+ball+    {str(leader['count'][4])}+strike&qt=FREETEXT", height = 600)
+
 
