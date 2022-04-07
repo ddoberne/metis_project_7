@@ -11,8 +11,8 @@ import streamlit as st
 # In[ ]:
 
 
-st.set_page_config(layout = 'wide')
-st.write('<h1 style="text-align: center;">The Filthiest</h1>')
+
+st.write('# The Filthiest')
 st.sidebar.write('**The Filthiest** reads in Statcast data from Baseball Savant and calculates the filthiest pitches thrown each day.')
 st.sidebar.write("**FiFaX**, or **Filth Factor X**, is the probability a pitch will be a swinging strike, called strike, or foul tip, given that the pitch is a strike or put in play.")
 st.sidebar.write('Predictions are given by a Random Forest model trained on all pitches thrown in 2021.')
@@ -26,6 +26,8 @@ date = '2021-9-1'
 filename = date + '.csv'
 df = pd.read_csv(filename, index_col = 0)
 df = df.loc[df['result'] == 'Strike']
+df['mph'] = df['mph'].round(decimals = 2)
+df['fifax'] = df['fifax'].round(decimals = 3)
 
 
 # In[19]:
