@@ -14,7 +14,7 @@ import streamlit as st
 
 st.write('# The Filthiest')
 st.sidebar.write('**The Filthiest** reads in Statcast data from Baseball Savant and calculates the filthiest pitches thrown each day.')
-st.sidebar.write("**FiFaX**, or **Filth Factor X**, is the probability a pitch will be a swinging strike, called strike, or foul tip, given that the pitch is a strike or put in play.")
+st.sidebar.write("**FiFaX**, or **Filth Factor eXpected**, is the probability a pitch will be a swinging strike, called strike, or foul tip, given that the pitch is a strike or put in play.")
 st.sidebar.write('Predictions are given by a Random Forest model trained on all pitches thrown in 2021.')
 st.sidebar.write('Created by Dayv Doberne | [Twitter](https://www.twitter.com/Sunyveil_Sports)')
 
@@ -37,11 +37,11 @@ df['fifax'] = df['fifax'].round(decimals = 3)
 
 
 
-pitch_type = st.selectbox('Pitch type:', ('4-Seam Fastball', 'Slider', '2-Seam Fastball/Sinker', 'Changeup', 'Curveball', 'Splitter/Knuckleball', 'Cutter'))
+pitch_type = st.sidebar.selectbox('Pitch type:', ('4-Seam Fastball', 'Slider', '2-Seam Fastball/Sinker', 'Changeup', 'Curveball', 'Splitter/Knuckleball', 'Cutter'))
 
-sort = st.selectbox('Sort by:', ('FiFaX', 'MPH', 'RPM', 'VBreak', 'HBreak'))
+sort = st.sidebar.selectbox('Sort by:', ('FiFaX', 'MPH', 'RPM', 'VBreak', 'HBreak'))
 
-leader_index = st.selectbox('Select index:', (1,2,3,4,5))
+leader_index = st.sidebar.selectbox('Select index:', (1,2,3,4,5))
 pitch_dict = {'4-Seam Fastball': 'Fastball',
               'Slider': 'Slider',
               '2-Seam Fastball/Sinker': 'Sinker',
