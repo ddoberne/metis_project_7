@@ -44,7 +44,7 @@ pitch_dict = {'4-Seam Fastball': 'Fastball',
               'Changeup': 'Changeup',
               'Curveball': 'Curveball',
               'Splitter/Knuckleball': 'Splitter',
-              'Cutter'}
+              'Cutter': 'Cutter'}
 sort_dict = {'FiFaX': 'fifax',
              'MPH': 'mph',
              'RPM': 'rpm',
