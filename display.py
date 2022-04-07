@@ -12,9 +12,9 @@ import streamlit as st
 
 
 st.write('# The Filthiest')
-st.write('**The Filthiest** reads in Statcast data from Baseball Savant and calculates the filthiest pitches thrown each day.')
-st.write("**FiFaX**, or **Filth Factor X** is the probability a pitch will be a swinging strike, called strike, or foul tip given that the pitch is not a ball and doesn't result in a foul ball.")
-st.write('Predictions are given by a Random Forest model trained on all pitches thrown in 2021.')
+st.sidebar.write('**The Filthiest** reads in Statcast data from Baseball Savant and calculates the filthiest pitches thrown each day.')
+st.sidebar.write("**FiFaX**, or **Filth Factor X**, is the probability a pitch will be a swinging strike, called strike, or foul tip, given that the pitch is a strike or put in play.")
+st.sidebar.write('Predictions are given by a Random Forest model trained on all pitches thrown in 2021.')
 
 
 # In[ ]:
@@ -55,8 +55,8 @@ sort_dict = {'FiFaX': 'fifax',
 # In[20]:
 
 
-
-st.write('The top 5 ' + pitch_type + 's from MLB games on ' + date + ', sorted by ' + sort)
+show_n = 5
+st.write(f'The top {str(show_n)} {pitch_type}s from MLB games on {date}, sorted by {sort}.')
 
 pitch_type = pitch_dict[pitch_type]
 sort = sort_dict[sort]
@@ -78,5 +78,13 @@ st.dataframe(leaderboard_show)
 
 
 st.write(f"{leader.pitcher}'s {pitch_type.lower()} to {leader.batter} in inning {str(leader.inning)}, {leader['count'][1]}-{leader['count'][4]} count.")
-st.write('[Watch on MLB Film Room](https://www.mlb.com/video/search?q=' + leader.pitcher.replace(' ', '+') + '+' +     leader.batter.replace(' ', '+') + '+inning+' + str(leader.inning) + '+' + str(leader['count'][1]) + '+ball+' +     str(leader['count'][4]) + '+strike&qt=FREETEXT)')
+#st.write('[Watch on MLB Film Room](https://www.mlb.com/video/search?q=' + leader.pitcher.replace(' ', '+') + '+' + \
+#    leader.batter.replace(' ', '+') + '+inning+' + str(leader.inning) + '+' + str(leader['count'][1]) + '+ball+' + \
+#    str(leader['count'][4]) + '+strike&qt=FREETEXT)')
+
+
+# In[ ]:
+
+
+st.components.v1.iframe(f"https://www.mlb.com/video/search?q={leader.pitcher.replace(' ', '+')}+    {leader.batter.replace(' ', '+')}+inning+{str(leader.inning)}+{str(leader['count'][1])}+ball+    {str(leader['count'][4])}+strike&qt=FREETEXT")
 
