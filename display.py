@@ -75,7 +75,8 @@ if pitcher_search != '':
     leaderboard = leaderboard.loc[leaderboard['pitcher'].apply(lambda pitcher_name: pitcher_search.lower() in pitcher_name.lower())]
 if len(leaderboard) > 0:
     show_n = min(len(leaderboard), 5)
-    leader = leaderboard.iloc[leader_index - 1]
+    if leader_index <= show_n:
+        leader = leaderboard.iloc[leader_index - 1]
     leaderboard_show = leaderboard[['pitcher', 'batter', 'mph', 'rpm', 'vbreak', 'hbreak', 'fifax']]
     leaderboard_show.columns = ['Pitcher', 'Batter', 'Velo (mph)', 'RPM', 'VBreak', 'HBreak', 'FiFaX']
     leaderboard_show.index = range(1, len(leaderboard_show) + 1)
