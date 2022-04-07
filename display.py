@@ -97,7 +97,7 @@ if len(leaderboard) > 0:
         
         fig = plt.figure(figsize = (12,4))
         sns.set_theme('notebook')
-        ax = sns.kdeplot(x = df[sort])
+        ax = sns.kdeplot(x = leaderboard[sort])
         ax.set_xlabel(sort_in)
         ax.annotate(f"{leader.pitcher}'s {leader.pitch_type_raw}", xy = (leader[sort], 0), xytext = (leader[sort], 0.02),
                     arrowprops = dict(color = 'red'), horizontalalignment = 'center')
