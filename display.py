@@ -72,8 +72,8 @@ is_ascending = False
 
 leaderboard = df.loc[(df.pitch_type == pitch_type)].sort_values(by = sort, ascending = is_ascending).head()
 leader = leaderboard.iloc[leader_index - 1]
-leaderboard_show = leaderboard[['pitcher', 'batter', 'inning', 'mph', 'rpm', 'vbreak', 'hbreak', 'fifax']]
-leaderboard_show.columns = ['Pitcher', 'Batter', 'Inning', 'Velo (mph)', 'RPM', 'VBreak', 'HBreak', 'FiFaX']
+leaderboard_show = leaderboard[['pitcher', 'batter', 'mph', 'rpm', 'vbreak', 'hbreak', 'fifax']]
+leaderboard_show.columns = ['Pitcher', 'Batter', 'Velo (mph)', 'RPM', 'VBreak', 'HBreak', 'FiFaX']
 leaderboard_show.index = range(1, show_n + 1)
 st.dataframe(leaderboard_show)
 
