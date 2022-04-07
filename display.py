@@ -14,7 +14,7 @@ import seaborn as sns
 
 
 
-st.write('# ⚾ The Filthiest ⚾')
+st.write('# The Filthiest ⚾')
 
 
 # In[ ]:
