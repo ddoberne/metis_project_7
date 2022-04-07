@@ -34,6 +34,8 @@ pitch_type = st.sidebar.selectbox('Pitch type:', ('4-Seam Fastball', 'Slider', '
 sort = st.sidebar.selectbox('Sort by:', ('FiFaX', 'MPH', 'RPM', 'VBreak', 'HBreak'))
 
 leader_index = st.sidebar.selectbox('Select index:', (1,2,3,4,5))
+pitcher_search = st.sidebar.text_input('Pitcher search:', value = '')
+
 
 st.sidebar.write('**The Filthiest** reads in Statcast data from Baseball Savant and calculates the filthiest pitches thrown each day.')
 st.sidebar.write("**FiFaX**, or **Filth Factor eXpected**, is the probability a pitch will be a swinging strike, called strike, or foul tip, given that the pitch is a strike or put in play.")
@@ -58,8 +60,6 @@ sort_dict = {'FiFaX': 'fifax',
 # In[20]:
 
 
-show_n = 5
-st.write(f'The top {str(show_n)} {pitch_type}s from MLB games on {date}, sorted by {sort}.')
 
 pitch_type = pitch_dict[pitch_type]
 sort = sort_dict[sort]
@@ -70,12 +70,16 @@ sort = sort_dict[sort]
 
 is_ascending = False
 
-leaderboard = df.loc[(df.pitch_type == pitch_type)].sort_values(by = sort, ascending = is_ascending).head()
+leaderboard = df.loc[(df.pitch_type == pitch_type)].sort_values(by = sort, ascending = is_ascending)
+if pitcher_search != '':
+    leaderboard = leaderboard.loc[leaderboard['pitcher'].apply(lambda pitcher_name: pitcher_search in pitcher_name)]
+show_n = min(len(leaderboard), 5)
 leader = leaderboard.iloc[leader_index - 1]
 leaderboard_show = leaderboard[['pitcher', 'batter', 'mph', 'rpm', 'vbreak', 'hbreak', 'fifax']]
 leaderboard_show.columns = ['Pitcher', 'Batter', 'Velo (mph)', 'RPM', 'VBreak', 'HBreak', 'FiFaX']
 leaderboard_show.index = range(1, show_n + 1)
-st.dataframe(leaderboard_show)
+st.write(f'The top {str(show_n)} {pitch_type}s from MLB games on {date}, sorted by {sort}.')
+st.dataframe(leaderboard_show.head(show_n))
 
 
 # In[22]:
