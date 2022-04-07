@@ -11,10 +11,12 @@ import streamlit as st
 # In[ ]:
 
 
-st.write('# The Filthiest')
+st.set_page_config(layout = 'wide')
+st.write('<h1 style="text-align: center;">The Filthiest</h1>')
 st.sidebar.write('**The Filthiest** reads in Statcast data from Baseball Savant and calculates the filthiest pitches thrown each day.')
 st.sidebar.write("**FiFaX**, or **Filth Factor X**, is the probability a pitch will be a swinging strike, called strike, or foul tip, given that the pitch is a strike or put in play.")
 st.sidebar.write('Predictions are given by a Random Forest model trained on all pitches thrown in 2021.')
+st.sidebar.write('Created by Dayv Doberne | [Twitter](https://www.twitter.com/Sunyveil_Sports)')
 
 
 # In[ ]:
@@ -71,6 +73,7 @@ leaderboard = df.loc[(df.pitch_type == pitch_type)].sort_values(by = sort, ascen
 leader = leaderboard.iloc[leader_index - 1]
 leaderboard_show = leaderboard[['pitcher', 'batter', 'inning', 'mph', 'rpm', 'vbreak', 'hbreak', 'fifax']]
 leaderboard_show.columns = ['Pitcher', 'Batter', 'Inning', 'Velo (mph)', 'RPM', 'VBreak', 'HBreak', 'FiFaX']
+leaderboard_show.index = range(1, show_n + 1)
 st.dataframe(leaderboard_show)
 
 
@@ -86,5 +89,5 @@ st.write(f"{leader.pitcher}'s {pitch_type.lower()} to {leader.batter} in inning 
 # In[ ]:
 
 
-st.components.v1.iframe(f"https://www.mlb.com/video/search?q={leader.pitcher.replace(' ', '+')}+    {leader.batter.replace(' ', '+')}+inning+{str(leader.inning)}+{str(leader['count'][1])}+ball+    {str(leader['count'][4])}+strike&qt=FREETEXT")
+st.components.v1.iframe(f"https://www.mlb.com/video/search?q={leader.pitcher.replace(' ', '+')}+    {leader.batter.replace(' ', '+')}+inning+{str(leader.inning)}+{str(leader['count'][1])}+ball+    {str(leader['count'][4])}+strike&qt=FREETEXT", height = 600)
 
