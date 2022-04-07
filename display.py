@@ -99,7 +99,7 @@ if len(leaderboard) > 0:
         sns.set_theme('notebook')
         ax = sns.kdeplot(x = df[sort])
         ax.set_xlabel(sort_in)
-        ax.annotate(f"{leader.pitcher}'s {leader.pitch_type_raw}", xy = (leader[sort], 0), xytext = (leader[sort], 0.2),
+        ax.annotate(f"{leader.pitcher}'s {leader.pitch_type_raw}", xy = (leader[sort], 0), xytext = (leader[sort], 0.02),
                     arrowprops = dict(color = 'red'), horizontalalignment = 'center')
         ax.set(title = f'Distribution of {sort_in} for {pitch_type_in}s on {date}')
         st.pyplot(fig)
