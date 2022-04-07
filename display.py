@@ -82,8 +82,10 @@ if len(leaderboard) > 0:
     leaderboard_show.index = range(1, len(leaderboard_show) + 1)
     st.write(f'The top {str(show_n)} {pitch_type}s from MLB games on {date}, sorted by {sort}.')
     st.dataframe(leaderboard_show.head(show_n))
-    st.write(f"{leader.pitcher}'s {pitch_type.lower()} to {leader.batter} in inning {str(leader.inning)}, {leader['count'][1]}-{leader['count'][4]} count.")
-    st.components.v1.iframe(f"https://www.mlb.com/video/search?q={leader.pitcher.replace(' ', '+')}+        {leader.batter.replace(' ', '+')}+inning+{str(leader.inning)}+{str(leader['count'][1])}+ball+        {str(leader['count'][4])}+strike&qt=FREETEXT", height = 600)
+    
+    if leader_index <= show_n:
+        st.write(f"{leader.pitcher}'s {pitch_type.lower()} to {leader.batter} in inning {str(leader.inning)}, {leader['count'][1]}-{leader['count'][4]} count.")
+        st.components.v1.iframe(f"https://www.mlb.com/video/search?q={leader.pitcher.replace(' ', '+')}+            {leader.batter.replace(' ', '+')}+inning+{str(leader.inning)}+{str(leader['count'][1])}+ball+            {str(leader['count'][4])}+strike&qt=FREETEXT", height = 600)
 else:
     st.write('Player not found!')
 
